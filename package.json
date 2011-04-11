@@ -16,6 +16,7 @@
   "directories": {
     "lib": "./lib/ntpl"
   },
+  "main": "lib/nTPL/nTPL.js",
   "scripts" :{
     "preinstall" : "make build"
   }
