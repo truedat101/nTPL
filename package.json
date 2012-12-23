@@ -14,7 +14,7 @@
   "version"       : "0.5.0",
   "engines"       : { "node": ">=0.1.103" },
   "directories": {
-    "lib": "./lib/ntpl"
+    "lib": "./lib/nTPL"
   },
   "main": "lib/nTPL/nTPL.js",
   "scripts" :{

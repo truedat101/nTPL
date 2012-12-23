@@ -1,4 +1,4 @@
-var ntpl = require("ntpl").plugins('ntpl.block', 'ntpl.filter').ntpl;
+var ntpl = require("nTPL").plugins('nTPL.block', 'nTPL.filter').ntpl;
 
 var base = ntpl({
   template: "./tpl/base.html",

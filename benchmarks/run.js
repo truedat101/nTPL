@@ -2,7 +2,7 @@ var fs = require("fs");
 var path = require("path");
 var test = require("assert");
 
-var ntpl = require("ntpl").plugins("ntpl.block", "ntpl.filter").ntpl;
+var ntpl = require("nTPL").plugins("nTPL.block", "nTPL.filter").ntpl;
 
 var tests = [];
 

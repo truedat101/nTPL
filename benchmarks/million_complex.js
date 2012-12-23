@@ -1,4 +1,4 @@
-var ntpl = require("ntpl").ntpl;
+var ntpl = require("nTPL").ntpl;
 
 var tpl = ntpl({
 	template: "./million_complex.html",
