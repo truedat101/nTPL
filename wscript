@@ -23,5 +23,5 @@ def build(bld):
 def shutdown():  
     if exists('./lib/nTPL/nTPL.native.node'):
       unlink('./lib/nTPL/nTPL.native.node');
-    if exists('./build/default/nTPL.native.node'):
-      copy('./build/default/nTPL.native.node', './lib/nTPL/nTPL.native.node')
+    if exists('./build/Release/nTPL.native.node'):
+      copy('./build/Release/nTPL.native.node', './lib/nTPL/nTPL.native.node')
