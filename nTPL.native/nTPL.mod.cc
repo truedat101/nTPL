@@ -4,7 +4,7 @@
 * Copyright 2010, Fedor Indutny
 * Released under MIT license
 */
-#include <ntpl.mod.h>
+#include <nTPL.mod.h>
 #include <v8.h>
 #include <stdio.h>
 

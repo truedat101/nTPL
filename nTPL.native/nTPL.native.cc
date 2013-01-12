@@ -8,7 +8,7 @@
 #include <stdio.h>  // sprintf
 #include <string.h> // strlen
 
-#include "ntpl.mod.h"
+#include "nTPL.mod.h"
 
 using namespace v8;
 #ifdef NODE_NTPL_MODIFICATORS_MODULE
