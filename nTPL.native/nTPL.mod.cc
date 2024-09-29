@@ -29,7 +29,7 @@ namespace ntpl {
 		#define _PARSER_OP_SPACES(offset) (_PARSER_OP(0,' ') || _PARSER_OP(0,'\t'))
 		#define _SKIP_SPACES do{i++;}while(_PARSER_OP_SPACES(0));_PARSER_MOVE(0);		
 		// "Set" modificator
-		Handle<Value> option(const Arguments& args)
+		Handle<Value> option(const FunctionCallbackInfo<Value>& args)
 		{
 			HandleScope scope;
 			
@@ -210,7 +210,7 @@ namespace ntpl {
 		#define NEW_MODIFICATOR(name,func) modificators->Set( String::New(name), FunctionTemplate::New(func)->GetFunction() )
 		
 		// This function adds modificator to current ntpl instance
-		Handle<Value> add(const Arguments& args)
+		Handle<Value> add(const FunctionCallbackInfo<Value>& args)
 		{
 			HandleScope scope;
 			

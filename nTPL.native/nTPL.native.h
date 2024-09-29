@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "ntpl_mod.h"
+#include "nTPL.mod.h"
 
 namespace ntpl {
 
@@ -22,9 +22,9 @@ namespace ntpl {
 	static Local<String> callModificator( Position* pos, Local<Object> modificators ) {};
 	static void pushVariable( Position* pos, Replacements* replace) {};
 
-	bool parseValidateArgs(const Arguments& args) {};
+	bool parseValidateArgs(const FunctionCallbackInfo<Value>& args) {};
 
-	Handle<Value> parse(const Arguments& args) {};
+	Handle<Value> parse(const FunctionCallbackInfo<Value>& args) {};
 
 }
 #endif //NODE_NTPL_MODULE
