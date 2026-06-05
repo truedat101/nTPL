@@ -1,36 +1,26 @@
-LIB_PREFIX = $(HOME)/.node_libraries
 NODE = node
 
+# Build the native N-API addon into build/Release/ntpl_native.node.
+# The `bindings` package locates it from there at runtime, so no copy step.
 build:
-	@echo "Building..."
-	@node-gyp clean && node-gyp configure && node-gyp build
-	@echo "Copy relase file ntpl.native.node to lib"
-	@cp build/Release/ntpl.native.node lib/nTPL/ntpl.native.node
+	@echo "Building native addon..."
+	@node-gyp rebuild
 
-install:
-	@echo "Installing..."
-	@mkdir -p $(LIB_PREFIX)
-	@cp -fr lib/nTPL/* $(LIB_PREFIX)/
-
-uninstall:
-	@echo "Uninstalling ..."
-	@rm -f $(LIB_PREFIX)/nTPL.js
-	@rm -f $(LIB_PREFIX)/nTPL.native.node
-	@rm -f $(LIB_PREFIX)/nTPL.block.js
-	@rm -f $(LIB_PREFIX)/nTPL.filter.js
+# Convenience wrapper that also pulls dependencies first.
+deps:
+	@echo "Installing dependencies..."
+	@npm install
 
 test:
 	@echo "Testing..."
-	@cd ./tests && $(NODE) run.js && cd ..
+	@cd ./tests && $(NODE) run.js
 
 clean:
-	@echo "Cleaning directory"
+	@echo "Cleaning build directory..."
 	@node-gyp clean
-	@echo "Remove ntpl.native.node from lib"
-	@rm lib/nTPL/ntpl.native.node
 
-all : uninstall clean build install
+all : clean build
 
-dev : uninstall clean build install test
+dev : clean build test
 
-.PHONY : build install uninstall test
+.PHONY : build deps test clean all dev

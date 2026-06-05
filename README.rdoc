@@ -1,36 +1,41 @@
-==ntpl project: simple, fast and powerfull templates for node.js (http://github.com/donnerjack13589/ntpl).
-It's easy to learn - start now!
-Now comes with support of <b>Express.js</b>!
+==nTPL: simple, fast and powerful templates for node.js (https://github.com/truedat101/nTPL).
+A revived fork of the original nTPL by Fedor Indutny, modernized to build and run
+on current Node.js (20 / 22). Comes with optional <b>Express.js</b> integration.
 
-==It's fast:
-Mustache saids that running complex.html example gives following results:
-	Mu -  40 secs  (benchmarks/million_complex.js)
-
-On my PC - running ntpl's:
-	ntpl - 6 secs (benchmarks/million_complex.js)
-
-Feel the difference?
+==Status (v0.5.0):
+This fork was modernized for Node 20/22. See CHANGELOG below and DESIGN.md for the
+architecture and the rationale behind the changes.
 
 ==Some features:
-* ntpl have native parser written on C++, so templates are compiled very fast.
-* ntpl have many optimizations in template rendering process.
-* ntpl uses buffers
-* ntpl is extendable (ntpl.modificators)
-* ntpl can reload template on file change (watch: true)
+* Native parser written in C++ via N-API (node-addon-api) - ABI-stable across Node releases.
+* Templates are compiled once to a JS function and cached, so rendering is fast.
+* Extendable via nTPL.modificators (the "block", "filter" and "set" plugins ship in the box).
+* Can reload a template when its file changes (watch: true).
+
+==Security note:
+nTPL compiles templates by eval()-ing generated JavaScript. This is fine for
+trusted template files, but you must NOT compile attacker-controlled template
+strings - expressions inside {%= ... %} run as arbitrary JavaScript. Treat
+template sources like code, not user input.
 
 ==Installation:
-	npm install ntpl
+	npm install nTPL
 
-==Manual installation instructions:
-	curl http://github.com/donnerjack13589/ntpl/raw/master/install.sh | sh
-or if it dies "Permission Denied" or EACCESS error
-	curl http://github.com/donnerjack13589/ntpl/raw/master/install.sh | sudo sh
-	
-==Advanced installation instructions:	
-	git clone git@github.com:donnerjack13589/ntpl.git
-	cd ntpl
-	make all
-	make test
+The native parser is built automatically on install via node-gyp.
+
+==Requirements:
+* Node.js 20 or 22 (uses N-API).
+* A C/C++ toolchain for the native addon (build-essential / Xcode CLT / MSVC) and python3 -
+  the standard node-gyp prerequisites.
+
+==Advanced / from source:
+	git clone https://github.com/truedat101/nTPL.git
+	cd nTPL
+	npm install        # installs deps and builds the native addon
+	npm test           # runs the test suite
+
+To rebuild the addon after editing src/ntpl_native.cc:
+	npm run build      # alias for: node-gyp rebuild
 
 ==Basic examples:
 	var ntpl = require("nTPL").plugins("nTPL.block", "nTPL.filter").ntpl;
@@ -139,3 +144,28 @@ Template generated from this file will have 'first template' name and can get 'a
 ===More info:
 You can't setup any other options now. Only 'name' and 'args' are allowed.
 But if you generated template with "watch=true" and then change {%set ... %} in template - 'name' and 'args' will be refreshed!
+
+==Exports
+
+	var lib = require("nTPL");
+	lib.ntpl    // the template function (also lib.parse and lib.nTPL - all the same)
+	lib.plugins("nTPL.block", "nTPL.filter") // install plugins, returns lib for chaining
+	lib.render("name@file")                  // Express.js style render
+	lib.modificators                         // the modificator table (extend it to add tags)
+
+The conventional entry point is:
+
+	var ntpl = require("nTPL").plugins("nTPL.block", "nTPL.filter").ntpl;
+
+==Changelog
+
+===0.5.0 - Modernization for Node 20/22
+* Native parser rewritten with N-API / node-addon-api (was unbuildable legacy V8 code).
+* Replaced removed Node APIs (path.exists / path.existsSync) with fs equivalents.
+* The "set" modificator is now implemented in JS and works out of the box.
+* require("nTPL").ntpl now resolves (was a .nTPL vs .ntpl casing bug); .parse and .nTPL
+  are kept as aliases.
+* Removed the global process.on('uncaughtException') handler that silently swallowed errors.
+* Build is now `npm install` (node-gyp); the native binary is located at runtime via `bindings`.
+* Dropped obsolete build scripts (wscript, install.sh) and the old ~2010 native sources.
+* All 37 tests pass on Node 22 (`npm test`).

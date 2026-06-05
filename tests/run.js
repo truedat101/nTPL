@@ -2,12 +2,12 @@ var fs = require("fs");
 var path = require("path");
 var test = require("assert");
 
-var ntpl = require("nTPL").plugins('nTPL.block', 'nTPL.filter').ntpl;
+var ntpl = require("../lib/nTPL/nTPL.js").plugins('nTPL.block', 'nTPL.filter').ntpl;
 
 var tests = [];
 
-for (var i = 1, filename; path.existsSync( (filename = "./tests/test-" + i) + ".js"); i++)
-	tests[i] = require(filename);	
+for (var i = 1, filename; fs.existsSync( (filename = "./tests/test-" + i) + ".js"); i++)
+	tests[i] = require(filename);
 	
 var template = [ , "/", total = tests.length - 1, " :: ", , " :: ", ];
 var SUCCESS = "SUCCESS";

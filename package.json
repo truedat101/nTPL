@@ -1,12 +1,12 @@
 {
   "name": "nTPL",
   "description": "ntpl is node.js extremely fast template engine",
-  "url": "http://github.com/donnerjack13589/ntpl",
+  "url": "http://github.com/truedat101/nTPL",
   "keywords": [
     "template",
     "ntpl",
-    "ntpl",
-    "parser"
+    "parser",
+    "engine"
   ],
   "author": "Fedor Indutny <fedor.indutny@gmail.com>",
   "contributors": [
@@ -17,20 +17,26 @@
   ],
   "repository": {
     "type": "git",
-    "url": "http://github.com/donnerjack13589/ntpl.git"
+    "url": "http://github.com/truedat101/nTPL.git"
   },
-  "version": "0.4.7",
+  "version": "0.5.0",
+  "license": "MIT",
   "engines": {
-    "node": "^20.0.0"
+    "node": ">=20"
   },
+  "gypfile": true,
   "directories": {
     "lib": "./lib/nTPL"
   },
   "main": "lib/nTPL/nTPL.js",
   "scripts": {
-    "preinstall": "make build"
+    "install": "node-gyp rebuild",
+    "build": "node-gyp rebuild",
+    "test": "cd tests && node run.js"
   },
   "dependencies": {
+    "bindings": "^1.5.0",
+    "node-addon-api": "^8.3.0"
   },
   "devDependencies": {
     "node-gyp": "^10.2.0"
